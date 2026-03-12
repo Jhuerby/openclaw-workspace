@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenClaw Workspace | AI Agent</title>
+    <title>早读声音监控系统</title>
     <style>
         * {
             margin: 0;
@@ -12,260 +12,493 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            background: #1a1a2e;
+            color: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            padding: 20px;
-            color: white;
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .container {
-            max-width: 800px;
-            width: 100%;
-        }
-
-        header {
             text-align: center;
-            margin-bottom: 40px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            background: linear-gradient(90deg, #00d9ff, #00ff88);
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 40px rgba(0, 217, 255, 0.3);
         }
 
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            font-weight: 300;
-        }
-
-        .status-badge {
-            display: inline-block;
-            background: rgba(0, 255, 136, 0.2);
-            border: 1px solid #00ff88;
-            border-radius: 20px;
-            padding: 8px 20px;
-            font-size: 0.9rem;
-            color: #00ff88;
-            margin-top: 15px;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .subtitle {
+            font-size: 1.2em;
+            color: #aaa;
             margin-bottom: 40px;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 217, 255, 0.3);
-            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.1);
-        }
-
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #00d9ff;
-        }
-
-        .card p {
-            font-size: 0.95rem;
-            opacity: 0.7;
-            line-height: 1.6;
-        }
-
-        .features {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
-        }
-
-        .features h2 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .feature-list {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-        }
-
-        .feature-list li {
+        .display-panel {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
-
-        .feature-list li::before {
-            content: "✓";
-            color: #00ff88;
-            font-weight: bold;
-            margin-right: 12px;
-            font-size: 1.2rem;
-        }
-
-        .repo-link {
-            display: inline-block;
-            background: linear-gradient(90deg, #00d9ff, #00ff88);
-            color: #1a1a2e;
-            text-decoration: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 1.1rem;
+            justify-content: center;
+            margin: 0 auto 30px;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 217, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
-        .repo-link:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.5);
+        .display-panel.good {
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            box-shadow: 0 10px 40px rgba(0, 176, 155, 0.4);
+            animation: pulse-green 2s infinite;
         }
 
-        .links {
-            text-align: center;
+        .display-panel.warning {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            box-shadow: 0 10px 40px rgba(245, 87, 108, 0.4);
+        }
+
+        .display-panel.bad {
+            background: linear-gradient(135deg, #ff0844, #ffb199);
+            box-shadow: 0 10px 40px rgba(255, 8, 68, 0.4);
+            animation: pulse-red 1s infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .db-value {
+            font-size: 5em;
+            font-weight: bold;
+        }
+
+        .db-label {
+            font-size: 1.5em;
+            opacity: 0.8;
+        }
+
+        .status-text {
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .status-text.good {
+            color: #96c93d;
+            animation: glow-green 2s infinite;
+        }
+
+        .status-text.warning {
+            color: #f5576c;
+        }
+
+        .status-text.bad {
+            color: #ff0844;
+            animation: glow-red 1s infinite;
+        }
+
+        @keyframes glow-green {
+            0%, 100% { text-shadow: 0 0 10px rgba(150, 201, 61, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(150, 201, 61, 0.8); }
+        }
+
+        @keyframes glow-red {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 8, 68, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(255, 8, 68, 0.8); }
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
             margin-top: 30px;
         }
 
-        .links a {
-            color: #00d9ff;
-            text-decoration: none;
-            margin: 0 15px;
-            opacity: 0.8;
-            transition: opacity 0.3s;
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
         }
 
-        .links a:hover {
-            opacity: 1;
+        .btn-start {
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            color: white;
         }
 
-        footer {
-            margin-top: 50px;
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .btn-stop {
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+        }
+
+        .btn-stop:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 65, 108, 0.4);
+        }
+
+        .threshold-settings {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .threshold-settings h3 {
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+
+        .threshold-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            gap: 20px;
+        }
+
+        .threshold-item label {
+            width: 120px;
+            text-align: right;
+        }
+
+        .threshold-item input {
+            width: 80px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
             text-align: center;
-            opacity: 0.5;
-            font-size: 0.9rem;
+        }
+
+        .history-chart {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .history-chart h3 {
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            gap: 5px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #00d2ff, #3a7bd5);
+            border-radius: 3px 3px 0 0;
+            transition: height 0.3s ease;
+            min-height: 5px;
+        }
+
+        .tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .tips h3 {
+            margin-bottom: 10px;
+            color: #00d2ff;
+        }
+
+        .tips ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tips li {
+            padding: 5px 0;
+            color: #aaa;
+        }
+
+        .tips li::before {
+            content: "📌 ";
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: #ff416c;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🤖 OpenClaw Workspace</h1>
-            <p>AI Agent Personal Assistant</p>
-            <div class="status-badge">● Active & Running</div>
-        </header>
+        <h1>📢 早读声音监控系统</h1>
+        <p class="subtitle">实时监测教室朗读音量</p>
 
-        <div class="card-grid">
-            <div class="card">
-                <div class="card-icon">🧠</div>
-                <h3>Memory System</h3>
-                <p>Long-term memory with daily logs and curated memories for persistent context</p>
+        <div class="display-panel" id="displayPanel">
+            <div class="db-value" id="dbValue">--</div>
+            <div class="db-label">分贝</div>
+        </div>
+
+        <div class="status-text" id="statusText">点击开始监测</div>
+
+        <div class="controls">
+            <button class="btn-start" id="startBtn" onclick="startMonitoring()">▶ 开始监测</button>
+            <button class="btn-stop" id="stopBtn" onclick="stopMonitoring()" style="display: none;">⏹ 停止监测</button>
+        </div>
+
+        <div class="threshold-settings">
+            <h3>⚙️ 阈值设置（可调整）</h3>
+            <div class="threshold-item">
+                <label>🟢 绿色阈值（声音洪亮）:</label>
+                <input type="number" id="loudThreshold" value="75" min="50" max="120">
+                <span>分贝以上</span>
             </div>
-            <div class="card">
-                <div class="card-icon">🛡️</div>
-                <h3>Security First</h3>
-                <p>Weekly security scans, vulnerability reports, and risk assessment</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Multi-Channel</h3>
-                <p>Connected via WeCom, ready for WhatsApp, Telegram, Discord & more</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🔧</div>
-                <h3>Extensible Skills</h3>
-                <p>Custom skills for TTS, weather, health checks, and more</p>
+            <div class="threshold-item">
+                <label>🔴 红色阈值（声音太小）:</label>
+                <input type="number" id="quietThreshold" value="55" min="20" max="70">
+                <span>分贝以下</span>
             </div>
         </div>
 
-        <div class="features">
-            <h2>Core Capabilities</h2>
-            <ul class="feature-list">
-                <li>File operations (read, write, edit)</li>
-                <li>Shell command execution</li>
-                <li>Web search & content fetching</li>
-                <li>Browser automation</li>
-                <li>Sub-agent orchestration</li>
-                <li>Session management</li>
-                <li>Text-to-speech (macOS)</li>
-                <li>GitHub integration</li>
-                <li>Memory recall system</li>
-                <li>Proactive heartbeats</li>
+        <div class="history-chart">
+            <h3>📊 音量变化趋势</h3>
+            <div class="chart-container" id="chartContainer"></div>
+        </div>
+
+        <div class="tips">
+            <h3>💡 使用建议</h3>
+            <ul>
+                <li>将设备放在教室中间位置，确保能采集到全班声音</li>
+                <li>🟢 绿色（≥75 分贝）：声音洪亮，提出表扬</li>
+                <li>🔴 红色（≤55 分贝）：声音太小，需要提醒</li>
+                <li>老师可以在办公室远程查看（需要网络共享）</li>
+                <li>可以设置声音提醒，当音量过低时自动提醒</li>
             </ul>
         </div>
-
-        <div style="text-align: center;">
-            <a href="https://github.com/Jhuerby/openclaw-workspace" class="repo-link" target="_blank">
-                View on GitHub →
-            </a>
-        </div>
-
-        <div class="links">
-            <a href="https://docs.openclaw.ai" target="_blank">📚 Documentation</a>
-            <a href="https://clawhub.com" target="_blank">🔌 Skill Hub</a>
-            <a href="https://discord.gg/clawd" target="_blank">💬 Community</a>
-        </div>
-
-        <footer>
-            <p>Powered by OpenClaw • Built with ❤️</p>
-            <p>Last updated: March 2026</p>
-        </footer>
     </div>
 
+    <div class="notification" id="notification"></div>
+
     <script>
-        // Add some interactivity
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-5px) scale(1.02)';
+        let audioContext;
+        let analyser;
+        let microphone;
+        let dataArray;
+        let isMonitoring = false;
+        let animationId;
+        let historyData = [];
+        const maxHistory = 60; // 保存最近 60 个数据点
+
+        // 初始化图表
+        function initChart() {
+            const container = document.getElementById('chartContainer');
+            container.innerHTML = '';
+            for (let i = 0; i < maxHistory; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = '5px';
+                container.appendChild(bar);
+            }
+        }
+
+        // 更新图表
+        function updateChart(dbValue) {
+            historyData.push(dbValue);
+            if (historyData.length > maxHistory) {
+                historyData.shift();
+            }
+
+            const bars = document.querySelectorAll('.chart-bar');
+            bars.forEach((bar, index) => {
+                if (historyData[index]) {
+                    const height = Math.max(5, (historyData[index] / 120) * 100);
+                    bar.style.height = `${height}%`;
+                    
+                    // 根据音量设置颜色
+                    const loudThreshold = parseInt(document.getElementById('loudThreshold').value);
+                    const quietThreshold = parseInt(document.getElementById('quietThreshold').value);
+                    
+                    if (historyData[index] >= loudThreshold) {
+                        bar.style.background = 'linear-gradient(to top, #ff0844, #ffb199)';
+                    } else if (historyData[index] <= quietThreshold) {
+                        bar.style.background = 'linear-gradient(to top, #00b09b, #96c93d)';
+                    } else {
+                        bar.style.background = 'linear-gradient(to top, #f093fb, #f5576c)';
+                    }
+                }
             });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-            });
+        }
+
+        // 显示通知
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // 更新显示
+        function updateDisplay(dbValue) {
+            const displayPanel = document.getElementById('displayPanel');
+            const statusText = document.getElementById('statusText');
+            const dbValueElement = document.getElementById('dbValue');
+
+            dbValueElement.textContent = dbValue.toFixed(1);
+
+            const loudThreshold = parseInt(document.getElementById('loudThreshold').value);
+            const quietThreshold = parseInt(document.getElementById('quietThreshold').value);
+
+            // 移除所有状态类
+            displayPanel.classList.remove('good', 'warning', 'bad');
+            statusText.classList.remove('good', 'warning', 'bad');
+
+            // 根据分贝值设置状态
+            if (dbValue >= loudThreshold) {
+                // 声音大 - 绿色，表扬
+                displayPanel.classList.add('good');
+                statusText.classList.add('good');
+                statusText.textContent = '✅ 声音洪亮，非常好！继续保持！';
+            } else if (dbValue <= quietThreshold) {
+                // 声音小 - 红色，提醒
+                displayPanel.classList.add('bad');
+                statusText.classList.add('bad');
+                statusText.textContent = '📢 请大声朗读！声音再大一点！';
+                showNotification('⚠️ 音量过低，请提醒学生大声朗读！');
+            } else {
+                // 中间状态 - 黄色，提示
+                displayPanel.classList.add('warning');
+                statusText.classList.add('warning');
+                statusText.textContent = '👂 音量适中，可以再大一点';
+            }
+
+            updateChart(dbValue);
+        }
+
+        // 开始监测
+        async function startMonitoring() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                microphone = await navigator.mediaDevices.getUserMedia({ audio: true });
+                const source = audioContext.createMediaStreamSource(microphone);
+                source.connect(analyser);
+
+                analyser.fftSize = 256;
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                isMonitoring = true;
+                document.getElementById('startBtn').style.display = 'none';
+                document.getElementById('stopBtn').style.display = 'inline-block';
+
+                monitor();
+                showNotification('✅ 开始监测');
+            } catch (err) {
+                console.error('错误:', err);
+                showNotification('❌ 无法访问麦克风，请检查权限设置');
+            }
+        }
+
+        // 停止监测
+        function stopMonitoring() {
+            isMonitoring = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            if (microphone) {
+                microphone.getTracks().forEach(track => track.stop());
+            }
+            if (audioContext) {
+                audioContext.close();
+            }
+
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('stopBtn').style.display = 'none';
+            document.getElementById('dbValue').textContent = '--';
+            document.getElementById('statusText').textContent = '已停止监测';
+            document.getElementById('displayPanel').className = 'display-panel';
+            showNotification('⏹ 已停止监测');
+        }
+
+        // 监测音量
+        function monitor() {
+            if (!isMonitoring) return;
+
+            analyser.getByteFrequencyData(dataArray);
+
+            // 计算平均音量
+            let sum = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+                sum += dataArray[i];
+            }
+            const average = sum / dataArray.length;
+
+            // 转换为分贝值（近似）
+            // 实际分贝值需要根据设备校准，这里使用相对值
+            const dbValue = Math.max(0, Math.min(120, average * 1.5 + 30));
+
+            updateDisplay(dbValue);
+
+            animationId = requestAnimationFrame(monitor);
+        }
+
+        // 页面加载时初始化图表
+        initChart();
+
+        // 阈值改变时重新计算当前状态
+        document.getElementById('loudThreshold').addEventListener('change', () => {
+            showNotification('✅ 阈值已更新');
+        });
+
+        document.getElementById('quietThreshold').addEventListener('change', () => {
+            showNotification('✅ 阈值已更新');
         });
     </script>
 </body>
